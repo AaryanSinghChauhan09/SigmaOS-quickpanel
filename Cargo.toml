@@ -1,0 +1,9 @@
+[package]
+name = "sigmaos-quickpanel"
+version = "0.1.0"
+edition = "2021"
+authors = ["SigmaOS Project"]
+description = "SigmaOS QuickPanel applet and tray widget management subsystem"
+license = "GPL-3.0"
+
+[dependencies]
