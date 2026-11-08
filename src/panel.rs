@@ -30,6 +30,7 @@ impl Default for PanelConfig {
 pub struct QuickPanel {
     config: PanelConfig,
     widgets: BTreeMap<WidgetId, Box<dyn Widget>>,
+    revealed: bool,
 }
 
 impl QuickPanel {
@@ -37,12 +38,29 @@ impl QuickPanel {
         Self {
             config,
             widgets: BTreeMap::new(),
+            revealed: false,
         }
     }
 
     // ── Queries (Command-Query Separation) ──────────────────────────────────
     pub fn config(&self) -> &PanelConfig {
         &self.config
+    }
+
+    /// Whether the panel should currently be presented by its host shell.
+    /// A non-autohide panel is always visible; autohide panels require reveal.
+    pub fn is_visible(&self) -> bool {
+        !self.config.autohide || self.revealed
+    }
+
+    /// Update pointer/focus-driven reveal state for an autohide panel.
+    pub fn set_revealed(&mut self, revealed: bool) {
+        self.revealed = revealed;
+    }
+
+    /// Change the autohide policy without rebuilding the widget collection.
+    pub fn set_autohide(&mut self, autohide: bool) {
+        self.config.autohide = autohide;
     }
 
     pub fn widget_count(&self) -> usize {
