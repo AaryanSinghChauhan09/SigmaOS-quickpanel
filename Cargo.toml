@@ -7,3 +7,7 @@ description = "SigmaOS QuickPanel applet and tray widget management subsystem"
 license = "GPL-3.0"
 
 [dependencies]
+
+[lib]
+name = "sigmaos_quickpanel"
+path = "src/lib.rs"
